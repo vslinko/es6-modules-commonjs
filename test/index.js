@@ -35,7 +35,7 @@ describe('ES6ModulesCommonJS', function() {
   });
 
   it('should fix import declaration', function() {
-    expectTransform('import a from "b";', 'var a = require("b")["a"];');
+    expectTransform('import a from "b";', 'var a = require("b");');
     expectTransform('import {a, b as c} from "d";', 'var a = require("d")["a"], c = require("d")["b"];');
     expectTransform('import "a";', 'require("a");');
   });
