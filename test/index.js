@@ -21,12 +21,14 @@ describe('ES6ModulesCommonJS', function() {
       '  var exportedModule = require("a");',
       '',
       '  for (var key in exportedModule) {',
-      '    module.exports[key] = exportedModule[key];',
+      '    if (key !== "default") {',
+      '      module.exports[key] = exportedModule[key];',
+      '    }',
       '  }',
       '})();'
     ].join('\n'));
     expectTransform('export {a, b as c};', 'module.exports["a"] = a, module.exports["c"] = b;');
-    expectTransform('export default function a() {};', 'module.exports = function a() {};');
+    expectTransform('export default function a() {};', 'module.exports["default"] = function a() {};');
     expectTransform('export var a = 1;', 'var a = module.exports["a"] = 1;');
     expectTransform('export let a = 1;', 'let a = module.exports["a"] = 1;');
     expectTransform('export const a = 1;', 'const a = module.exports["a"] = 1;');
@@ -35,7 +37,7 @@ describe('ES6ModulesCommonJS', function() {
   });
 
   it('should fix import declaration', function() {
-    expectTransform('import a from "b";', 'var a = require("b")["a"];');
+    expectTransform('import a from "b";', 'var a = require("b")["default"];');
     expectTransform('import {a, b as c} from "d";', 'var a = require("d")["a"], c = require("d")["b"];');
     expectTransform('import "a";', 'require("a");');
   });
