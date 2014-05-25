@@ -1,0 +1,17 @@
+{
+  "name": "es6-modules-commonjs",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "through": "^2.3",
+    "recast": "^0.5",
+    "esprima": "git+https://github.com/vslinko-forks/esprima.git#harmony-export-default"
+  },
+  "devDependencies": {
+    "mocha": "^1.19",
+    "chai": "^1.9"
+  }
+}
